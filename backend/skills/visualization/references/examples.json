@@ -1,0 +1,47 @@
+[
+  {
+    "id": "example-01",
+    "input": "画出月度销售额趋势图",
+    "intent": "趋势折线图",
+    "expected_sql": "SELECT strftime('%Y-%m', 下单时间) AS 月份, SUM(金额) AS 销售额 FROM orders WHERE status = '已完成' GROUP BY 月份 ORDER BY 月份",
+    "expected_skill": "visualization",
+    "expected_chart_type": "line",
+    "notes": "含时间维度，折线图"
+  },
+  {
+    "id": "example-02",
+    "input": "用饼图展示各品类占比",
+    "intent": "占比饼图",
+    "expected_sql": "SELECT 品类, SUM(金额) AS 销售额 FROM orders JOIN products ON orders.product_id = products.id GROUP BY 品类",
+    "expected_skill": "visualization",
+    "expected_chart_type": "pie",
+    "notes": "用户指定饼图，品类少适合饼图"
+  },
+  {
+    "id": "example-03",
+    "input": "各城市的销售分布对比图",
+    "intent": "对比柱状图",
+    "expected_sql": "SELECT users.城市, SUM(orders.金额) AS 销售额 FROM orders JOIN users ON orders.user_id = users.id GROUP BY users.城市 ORDER BY 销售额 DESC",
+    "expected_skill": "visualization",
+    "expected_chart_type": "bar",
+    "notes": "城市数量多，柱状图更合适"
+  },
+  {
+    "id": "example-04",
+    "input": "可视化一下用户的年龄段分布",
+    "intent": "分布饼图",
+    "expected_sql": "SELECT CASE WHEN 年龄 < 25 THEN '18-24' WHEN 年龄 < 35 THEN '25-34' ELSE '35+' END AS 年龄段, COUNT(*) AS 人数 FROM users GROUP BY 年龄段",
+    "expected_skill": "visualization",
+    "expected_chart_type": "pie",
+    "notes": "年龄段分组少，饼图合适"
+  },
+  {
+    "id": "example-05",
+    "input": "每周订单量变化趋势图",
+    "intent": "时间序列",
+    "expected_sql": "SELECT strftime('%W', 下单时间) AS 周, COUNT(*) AS 订单数 FROM orders GROUP BY 周 ORDER BY 周",
+    "expected_skill": "visualization",
+    "expected_chart_type": "line",
+    "notes": "时间序列，折线图最佳"
+  }
+]

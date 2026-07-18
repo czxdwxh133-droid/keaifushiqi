@@ -1,0 +1,47 @@
+[
+  {
+    "id": "example-01",
+    "input": "各品类销售额对比",
+    "intent": "对比分析",
+    "expected_sql": "SELECT 品类, SUM(金额) AS 总销售额 FROM orders JOIN products ON orders.product_id = products.id WHERE orders.status = '已完成' GROUP BY 品类 ORDER BY 总销售额 DESC",
+    "expected_skill": "analysis",
+    "expected_output": "销售额对比结论 + 排名",
+    "notes": "GROUP BY 分组聚合，需排除已取消/已退款订单"
+  },
+  {
+    "id": "example-02",
+    "input": "退货的多不多？",
+    "intent": "比例分析（口语化问法）",
+    "expected_sql": "SELECT status, COUNT(*) AS 订单数 FROM orders GROUP BY status",
+    "expected_skill": "analysis",
+    "expected_output": "退货率百分比 + 判断结论",
+    "notes": "口语化'多不多'应识别为分析意图，不能只返回COUNT"
+  },
+  {
+    "id": "example-03",
+    "input": "用户年龄段分布",
+    "intent": "分布分析",
+    "expected_sql": "SELECT CASE WHEN 年龄 < 25 THEN '18-24' WHEN 年龄 < 35 THEN '25-34' WHEN 年龄 < 45 THEN '35-44' ELSE '45+' END AS 年龄段, COUNT(*) AS 人数 FROM users GROUP BY 年龄段",
+    "expected_skill": "analysis",
+    "expected_output": "年龄段分布占比 + 主要用户群体",
+    "notes": "需要 CASE WHEN 做分段，输出占比分析"
+  },
+  {
+    "id": "example-04",
+    "input": "本月销量比上月涨了多少？",
+    "intent": "增长率计算",
+    "expected_sql": "SELECT SUM(CASE WHEN 下单时间 >= datetime('now','start of month') THEN 1 ELSE 0 END) AS 本月销量, SUM(CASE WHEN 下单时间 >= datetime('now','start of month','-1 month') AND 下单时间 < datetime('now','start of month') THEN 1 ELSE 0 END) AS 上月销量 FROM orders WHERE status = '已完成'",
+    "expected_skill": "analysis",
+    "expected_output": "增长率百分比 + 环比对比",
+    "notes": "时间对比分析，需要计算增长率"
+  },
+  {
+    "id": "example-05",
+    "input": "平均客单价是多少？各个城市有差异吗？",
+    "intent": "复合分析",
+    "expected_sql": "SELECT users.城市, AVG(orders.金额) AS 平均客单价 FROM orders JOIN users ON orders.user_id = users.id WHERE orders.status = '已完成' GROUP BY users.城市 ORDER BY 平均客单价 DESC",
+    "expected_skill": "analysis",
+    "expected_output": "各城市客单价 + 差异分析结论",
+    "notes": "多维度聚合 + JOIN，需要给出城市间对比结论"
+  }
+]

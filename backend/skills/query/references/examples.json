@@ -1,0 +1,42 @@
+[
+  {
+    "id": "example-01",
+    "input": "总共有多少用户？",
+    "intent": "简单计数",
+    "expected_sql": "SELECT COUNT(*) AS 用户总数 FROM users",
+    "expected_skill": "query",
+    "notes": "最简单的计数查询"
+  },
+  {
+    "id": "example-02",
+    "input": "列出所有在售商品",
+    "intent": "列表查询",
+    "expected_sql": "SELECT 商品名称, 价格, 库存 FROM products",
+    "expected_skill": "query",
+    "notes": "简单列表查询"
+  },
+  {
+    "id": "example-03",
+    "input": "姓张的用户有多少？",
+    "intent": "条件计数",
+    "expected_sql": "SELECT COUNT(*) FROM users WHERE 姓名 LIKE '张%'",
+    "expected_skill": "query",
+    "notes": "LIKE 模糊匹配"
+  },
+  {
+    "id": "example-04",
+    "input": "评分最高的商品是什么？",
+    "intent": "排序取极值",
+    "expected_sql": "SELECT 商品名称, AVG(评分) AS 平均评分 FROM reviews GROUP BY 商品名称 ORDER BY 平均评分 DESC LIMIT 1",
+    "expected_skill": "query",
+    "notes": "需要 JOIN + GROUP BY + ORDER BY + LIMIT"
+  },
+  {
+    "id": "example-05",
+    "input": "最近10笔订单",
+    "intent": "TOP N",
+    "expected_sql": "SELECT * FROM orders ORDER BY 下单时间 DESC LIMIT 10",
+    "expected_skill": "query",
+    "notes": "降序取 top N"
+  }
+]

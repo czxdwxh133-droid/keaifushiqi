@@ -1,0 +1,21 @@
+{
+  "description": "DataPilot 分级测试问题集 - 电商场景",
+  "questions": [
+    {"id": "E01", "level": "easy", "type": "单表聚合", "question": "各城市的用户数量是多少？"},
+    {"id": "E02", "level": "easy", "type": "单表聚合", "question": "商品库存总量是多少？"},
+    {"id": "E03", "level": "easy", "type": "单表分组", "question": "各商品类别的商品数量有多少？"},
+    {"id": "E04", "level": "easy", "type": "单表筛选", "question": "评分等于5分的评论有多少条？"},
+    {"id": "E05", "level": "easy", "type": "单表分组", "question": "各状态的订单数量分别是多少？"},
+    {"id": "E06", "level": "easy", "type": "单表统计", "question": "所有产品的平均价格是多少？"},
+    {"id": "M01", "level": "medium", "type": "多表JOIN", "question": "每个商品类别的总销售额是多少？"},
+    {"id": "M02", "level": "medium", "type": "多表JOIN", "question": "各商品类别的平均评分是多少？"},
+    {"id": "M03", "level": "medium", "type": "多表JOIN", "question": "销量最高的5个商品名称及销量是多少？"},
+    {"id": "M04", "level": "medium", "type": "多表JOIN", "question": "各城市的订单总金额是多少？"},
+    {"id": "M05", "level": "medium", "type": "多表JOIN", "question": "男性和女性用户各自的订单总金额？"},
+    {"id": "M06", "level": "medium", "type": "多表JOIN", "question": "平均售价最高的商品类别是哪个？"},
+    {"id": "H01", "level": "hard", "type": "子查询/复杂逻辑", "question": "复购用户（有2个及以上订单的用户）的数量和占比是多少？"},
+    {"id": "H02", "level": "hard", "type": "时序分析", "question": "2024年每个月的销售额，以及相比上个月的环比增长率？"},
+    {"id": "H03", "level": "hard", "type": "子查询", "question": "平均评分低于3分的商品有哪些？"},
+    {"id": "H04", "level": "hard", "type": "多层聚合", "question": "每个城市消费金额最高的前3名用户的消费总额？"}
+  ]
+}

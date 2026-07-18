@@ -1,0 +1,47 @@
+[
+  {
+    "id": "example-01",
+    "input": "帮我写一份本月经营分析报告",
+    "intent": "月度经营报告",
+    "expected_sql": "SELECT 品类, SUM(金额) AS 销售额, COUNT(*) AS 订单数 FROM orders JOIN products ON orders.product_id = products.id WHERE orders.status = '已完成' AND strftime('%Y-%m', 下单时间) = strftime('%Y-%m', 'now') GROUP BY 品类 ORDER BY 销售额 DESC",
+    "expected_skill": "report",
+    "expected_output": "包含 Summary + 关键发现 + 行动建议的完整报告",
+    "notes": "典型报告需求，走全流程"
+  },
+  {
+    "id": "example-02",
+    "input": "本季度销售业绩综合报告",
+    "intent": "季度综合报告",
+    "expected_sql": "SELECT strftime('%Y-%m', 下单时间) AS 月份, SUM(金额) AS 销售额 FROM orders WHERE status = '已完成' GROUP BY 月份 ORDER BY 月份",
+    "expected_skill": "report",
+    "expected_output": "季度趋势图 + 销售额分析 + 经营建议",
+    "notes": "含'综合'关键词 → report"
+  },
+  {
+    "id": "example-03",
+    "input": "做一份完整的用户行为分析报告",
+    "intent": "用户行为报告",
+    "expected_sql": "SELECT users.城市, COUNT(DISTINCT orders.user_id) AS 购买用户数, AVG(reviews.评分) AS 平均评分 FROM orders JOIN users ON orders.user_id = users.id LEFT JOIN reviews ON orders.product_id = reviews.product_id WHERE orders.status = '已完成' GROUP BY users.城市",
+    "expected_skill": "report",
+    "expected_output": "用户画像 + 行为特征 + 优化建议",
+    "notes": "'完整'关键词触发 report 而非 analysis"
+  },
+  {
+    "id": "example-04",
+    "input": "分析一下最近的经营情况，给我一个全面的洞察",
+    "intent": "经营洞察报告",
+    "expected_sql": "SELECT COUNT(*) AS 总订单, SUM(金额) AS 总销售额, AVG(金额) AS 平均客单价 FROM orders WHERE status = '已完成'",
+    "expected_skill": "report",
+    "expected_output": "多维度数据 + 业务洞察 + 改进方向",
+    "notes": "'全面' + '洞察' 双关键词触发 report"
+  },
+  {
+    "id": "example-05",
+    "input": "各品类销售业绩报告，要有图表和分析",
+    "intent": "多维报告",
+    "expected_sql": "SELECT 品类, SUM(金额) AS 销售额, COUNT(*) AS 订单数, AVG(金额) AS 平均客单价 FROM orders JOIN products ON orders.product_id = products.id WHERE orders.status = '已完成' GROUP BY 品类",
+    "expected_skill": "report",
+    "expected_output": "柱状图 + 指标分析 + 完整报告",
+    "notes": "用户明确同时要求图表和分析 → 归类为 report"
+  }
+]
