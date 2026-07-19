@@ -19,3 +19,4 @@ sample_data.db
 .env.local
 .idea
 *.spec
+cloudflared.exe

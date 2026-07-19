@@ -40,12 +40,7 @@ def _log(msg: str):
 
 # ── 初始化 ───────────────────────────
 ensure_sample_db()  # 确保示例数据库文件存在
-# 启动时自动连接示例数据库，避免忘记连接导致 "No database connected" 错误
-try:
-    _global_db.connect_sqlite(SAMPLE_DB_PATH)
-    _log(f"已自动连接示例数据库: {SAMPLE_DB_PATH}")
-except Exception as e:
-    _log(f"自动连接示例数据库失败（可手动连接）: {e}")
+# 不自动连接，等用户在欢迎页选择（示例库 或 自己的 MySQL）
 
 # 初始化 RAG 知识库（在启动后台线程中完成，避免阻塞启动）
 import threading as _threading

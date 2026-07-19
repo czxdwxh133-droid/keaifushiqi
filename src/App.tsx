@@ -52,20 +52,15 @@ export default function App() {
   const [sampleError, setSampleError] = useState("");
   const [transitioning, setTransitioning] = useState(false); // 正在切换到分析页
 
-  // 启动时检查后端状态（仅探活，不自动连接）
+  // 启动时检查后端状态（仅探活，始终显示欢迎页让用户选择）
   useEffect(() => {
     setStatusChecking(true);
     dbApi
       .getStatus()
       .then((s) => {
-        // 如果后端有活跃的数据库连接（用户之前手动连的），自动恢复
-        if (s.connected && s.database && s.kind !== "sqlite") {
-          return dbApi.getTables().then((tables) => {
-            setDbConnected(true);
-            setDbName(s.database!);
-            setDbKind((s.kind as any) ?? "mysql");
-            setDbTables(tables);
-          });
+        // 如果之前连过数据库，先断开，让用户重新选择
+        if (s.connected) {
+          dbApi.disconnect().catch(() => {});
         }
       })
       .catch(() => {})
