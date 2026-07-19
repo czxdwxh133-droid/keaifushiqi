@@ -11,6 +11,18 @@ _llm_config: dict[str, Any] = {
     "model": os.getenv("LLM_MODEL", "deepseek-chat"),
 }
 
+# ── 代理配置 ──
+# 只有显式设置了 LLM_PROXY 环境变量才走代理，屏蔽 Windows 系统代理干扰
+_http_proxy = os.getenv("LLM_PROXY") or None
+def _build_opener():
+    if _http_proxy:
+        proxy_handler = urllib.request.ProxyHandler({"https": _http_proxy, "http": _http_proxy})
+        return urllib.request.build_opener(proxy_handler)
+    # 不传 handlers 会用系统默认（包括 Windows IE 代理设置），
+    # 这里显式传入空代理，强制直连
+    return urllib.request.build_opener(urllib.request.ProxyHandler({}))
+_opener = _build_opener()
+
 
 def get_llm_config() -> dict[str, Any]:
     return dict(_llm_config)
@@ -38,7 +50,7 @@ def _llm_request(body_dict: dict, timeout: int = 60) -> dict:
     req.add_header("Authorization", f"Bearer {api_key}")
 
     try:
-        with urllib.request.urlopen(req, timeout=timeout) as resp:
+        with _opener.open(req, timeout=timeout) as resp:
             raw = resp.read().decode("utf-8")
             return json.loads(raw)
     except urllib.error.HTTPError as e:
