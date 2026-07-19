@@ -32,11 +32,12 @@ echo.
 echo [2/2] 启动 Cloudflare 隧道...
 echo.
 echo ──────────────────────────────────────
-echo   下方出现 trycloudflare.com 链接
-echo   即表示启动成功，复制发给 HR 即可
+echo   永久链接: https://datapilot.nihaofushiqi.asia
+echo   隧道已启动，可直接访问
 echo ──────────────────────────────────────
 echo.
 
-"%USERPROFILE%\cloudflared.exe" tunnel --url http://localhost:8080
+set HOME=%USERPROFILE%
+cloudflared.exe tunnel --config cloudflared.yml run datapilot
 
 pause

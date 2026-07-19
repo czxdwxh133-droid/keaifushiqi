@@ -1,0 +1,7 @@
+tunnel: 795fcc6a-4dd5-4ede-9296-005380321654
+credentials-file: C:\Users\28056\.cloudflared\795fcc6a-4dd5-4ede-9296-005380321654.json
+
+ingress:
+  - hostname: datapilot.nihaofushiqi.asia
+    service: http://localhost:8080
+  - service: http_status:404
