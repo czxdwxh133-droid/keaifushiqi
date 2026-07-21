@@ -47,7 +47,7 @@ function analyzeToScenario(result: AnalyzeResult): Scenario {
     table: {
       columns: result.result.columns,
       rows: result.result.rows.map((r: Record<string, unknown>) =>
-        result.result.columns.map((c: string) => r[c] ?? ""),
+        result.result.columns.map((c: string) => (r[c] ?? "") as string | number),
       ),
     },
     chart,

@@ -13,9 +13,20 @@ DataPilot —— 基于 Skill Router 架构的智能数据分析助手
 """
 from __future__ import annotations
 import os, sys, webbrowser, threading
+from pathlib import Path
 
 # 将 backend 目录加入 path，确保打包后可正确导入
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
+# 加载 .env 文件（本地开发用；服务器上 systemd 通过 EnvironmentFile 设置）
+_ENV_FILE = Path(__file__).resolve().parent / ".env"
+if _ENV_FILE.exists():
+    with open(_ENV_FILE, encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+            if line and not line.startswith("#") and "=" in line:
+                key, _, val = line.partition("=")
+                os.environ.setdefault(key.strip(), val.strip().strip('"').strip("'"))
 
 from backend.api.main import app
 

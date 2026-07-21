@@ -1,0 +1,17 @@
+[Unit]
+Description=DataPilot - 智能数据分析助手
+After=network.target
+
+[Service]
+Type=simple
+User=%u
+WorkingDirectory=%h/datapilot
+EnvironmentFile=%h/datapilot/.env
+ExecStart=python3 -m uvicorn backend.api.main:app --host 0.0.0.0 --port 8080
+Restart=always
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

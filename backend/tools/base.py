@@ -6,7 +6,7 @@ from typing import Any
 
 # ── LLM 配置 ──────────────────────────
 _llm_config: dict[str, Any] = {
-    "apiKey": os.getenv("LLM_API_KEY", "sk-f0aceb4eb22b4b5c80b941edaa9adb8a"),
+    "apiKey": os.getenv("LLM_API_KEY", ""),
     "baseUrl": os.getenv("LLM_BASE_URL", "https://api.deepseek.com/v1"),
     "model": os.getenv("LLM_MODEL", "deepseek-chat"),
 }
@@ -39,7 +39,7 @@ def update_llm_config(apiKey: str = "", baseUrl: str = "", model: str = ""):
 
 def _llm_request(body_dict: dict, timeout: int = 60) -> dict:
     """底层 HTTP 请求"""
-    api_key = _llm_config["apiKey"] or "sk-f0aceb4eb22b4b5c80b941edaa9adb8a"
+    api_key = _llm_config["apiKey"] or ""
     base_url = (_llm_config["baseUrl"] or "https://api.deepseek.com/v1").rstrip("/")
 
     body = json.dumps(body_dict, ensure_ascii=False).encode("utf-8")

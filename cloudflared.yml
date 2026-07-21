@@ -1,5 +1,6 @@
 tunnel: 795fcc6a-4dd5-4ede-9296-005380321654
 credentials-file: C:\Users\28056\.cloudflared\795fcc6a-4dd5-4ede-9296-005380321654.json
+# 去掉 protocol 字段，让 cloudflared 自己选最佳协议
 
 ingress:
   - hostname: datapilot.nihaofushiqi.asia

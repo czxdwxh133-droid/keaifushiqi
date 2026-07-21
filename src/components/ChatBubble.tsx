@@ -98,7 +98,9 @@ function autoChart(result: Required<ChatMessage>["dbResult"]): ChartSpec | null 
 function toTableData(result: Required<ChatMessage>["dbResult"]): TableData {
   return {
     columns: result.columns,
-    rows: result.rows.map((r) => result.columns.map((c) => r[c] ?? "")),
+    rows: result.rows.map((r) =>
+      result.columns.map((c) => (r[c] ?? "") as string | number),
+    ),
   };
 }
 
